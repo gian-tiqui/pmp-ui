@@ -1,5 +1,11 @@
+import Providers from "./providers/Providers";
+
 const App = () => {
-  return <div className="h-screen w-screen grid place-content-center">hi</div>;
+  return (
+    <>
+      <Providers />
+    </>
+  );
 };
 
 export default App;
