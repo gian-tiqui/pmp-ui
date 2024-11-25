@@ -16,4 +16,10 @@ type TaskListType = {
   tasks: CustomTask[];
 };
 
-export type { RouteType, CustomTask, TaskListType };
+type SidebarItem = {
+  name: string;
+  icon: string;
+  path: string;
+};
+
+export type { RouteType, CustomTask, TaskListType, SidebarItem };

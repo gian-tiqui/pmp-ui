@@ -4,6 +4,7 @@ import { RouteType } from "../types/types";
 import Login from "../pages/Login";
 import Index from "../pages/Index";
 import Main from "../components/Main";
+import Sidebar from "../components/Sidebar";
 
 const RouteProvider = () => {
   const routes: RouteType[] = [
@@ -21,13 +22,15 @@ const RouteProvider = () => {
 
   return (
     <Main>
-      <Router>
-        <Routes>
-          {routes.map((route, index) => (
-            <Route key={index} element={route.element} path={route.path} />
-          ))}
-        </Routes>
-      </Router>
+      <Sidebar>
+        <Router>
+          <Routes>
+            {routes.map((route, index) => (
+              <Route key={index} element={route.element} path={route.path} />
+            ))}
+          </Routes>
+        </Router>
+      </Sidebar>
     </Main>
   );
 };
