@@ -11,4 +11,9 @@ type CustomTask = Task & {
   barChildren?: Task[];
 };
 
-export type { RouteType, CustomTask };
+type TaskListType = {
+  name: string;
+  tasks: CustomTask[];
+};
+
+export type { RouteType, CustomTask, TaskListType };
