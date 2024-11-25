@@ -87,7 +87,7 @@ const Index = () => {
   }, [setTasks, _tasks]);
 
   return (
-    <div className="w-screen bg-neutral-200">
+    <div className="w-full bg-white">
       {selectedTask && (
         <div
           className="absolute z-50 grid w-screen h-screen bg-white place-content-center"
