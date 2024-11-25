@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { RouteType } from "../types/types";
 import Login from "../pages/Login";
 import Index from "../pages/Index";
+import Main from "../components/Main";
 
 const RouteProvider = () => {
   const routes: RouteType[] = [
@@ -19,13 +20,15 @@ const RouteProvider = () => {
   ];
 
   return (
-    <Router>
-      <Routes>
-        {routes.map((route, index) => (
-          <Route key={index} element={route.element} path={route.path} />
-        ))}
-      </Routes>
-    </Router>
+    <Main>
+      <Router>
+        <Routes>
+          {routes.map((route, index) => (
+            <Route key={index} element={route.element} path={route.path} />
+          ))}
+        </Routes>
+      </Router>
+    </Main>
   );
 };
 

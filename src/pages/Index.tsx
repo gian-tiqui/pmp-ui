@@ -8,8 +8,8 @@ import TaskList from "../components/TaskList";
 
 const Index = () => {
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
-  const { setTasks } = useTasksStore();
-  const [tasks, _setTasks] = useState<CustomTask[]>([
+  const { tasks, setTasks } = useTasksStore();
+  const [_tasks, _setTasks] = useState<CustomTask[]>([
     {
       start: new Date(2024, 10, 25),
       end: new Date(2024, 11, 5),
@@ -17,7 +17,10 @@ const Index = () => {
       id: "Project1",
       type: "project",
       progress: 0,
-      styles: { progressColor: "#6a1b9a", progressSelectedColor: "#4a148c" },
+      styles: {
+        progressColor: "#6a1b9a",
+        progressSelectedColor: "#4a148c",
+      },
     },
     {
       start: new Date(2024, 10, 25),
@@ -57,49 +60,16 @@ const Index = () => {
   const [newTaskStart, setNewTaskStart] = useState(new Date());
   const [newTaskEnd, setNewTaskEnd] = useState(new Date());
 
-  const updateProgress = (taskId: string) => {
-    _setTasks((prevTasks) => {
-      const updatedTasks = prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, progress: Math.min(task.progress + 10, 100) }
-          : task
-      );
-
-      const parentsToUpdate = new Set(
-        updatedTasks.filter((t) => t.id === taskId).map((t) => t.project)
-      );
-
-      return updatedTasks.map((task) => {
-        if (parentsToUpdate.has(task.id)) {
-          const children = updatedTasks.filter((t) => t.project === task.id);
-          const totalProgress = children.reduce(
-            (sum, child) =>
-              sum +
-              child.progress * (child.end.getTime() - child.start.getTime()),
-            0
-          );
-          const totalDuration = children.reduce(
-            (sum, child) => sum + (child.end.getTime() - child.start.getTime()),
-            0
-          );
-          return {
-            ...task,
-            progress: totalDuration
-              ? Math.round((totalProgress / totalDuration) * 100)
-              : 0,
-          };
-        }
-        return task;
-      });
-    });
-  };
+  useEffect(() => {
+    _setTasks(tasks);
+  }, [tasks]);
 
   const addNewTask = () => {
     const newTask: CustomTask = {
       start: newTaskStart,
       end: newTaskEnd,
       name: newTaskName,
-      id: `Task${tasks.length + 1}`,
+      id: `Task${_tasks.length + 1}`,
       type: "task",
       progress: 0,
       project: "Project1",
@@ -113,8 +83,8 @@ const Index = () => {
   };
 
   useEffect(() => {
-    setTasks(tasks);
-  }, [setTasks, tasks]);
+    setTasks(_tasks);
+  }, [setTasks, _tasks]);
 
   return (
     <div className="w-screen bg-neutral-200">
@@ -128,37 +98,12 @@ const Index = () => {
       )}
 
       <Gantt
-        tasks={tasks}
+        tasks={_tasks}
         onDoubleClick={(e) => setSelectedTask(e)}
         listCellWidth="100px"
       />
-      <div className="p-4 bg-white rounded shadow">
-        <h2 className="mb-2 text-lg font-semibold text-center">
-          THIS IS JUST A PROGRESS TOGGLER
-        </h2>
-        <ul className="space-y-2">
-          {tasks
-            .filter((task) => task.type === "task")
-            .map((task) => (
-              <li key={task.id} className="flex items-center justify-between">
-                <span>
-                  <strong>{task.name}</strong> - Progress: {task.progress}%
-                </span>
-                <button
-                  onClick={() => updateProgress(task.id)}
-                  disabled={task.progress === 100}
-                  className={`px-4 py-2 text-white rounded ${
-                    task.progress === 100
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-blue-500 hover:bg-blue-600"
-                  }`}
-                >
-                  {task.progress === 100 ? "Completed" : "Add Progress"}
-                </button>
-              </li>
-            ))}
-        </ul>
-      </div>
+
+      <TaskList _tasks={_tasks} />
 
       <div className="p-4 mt-5 bg-white rounded shadow">
         <h2 className="text-lg font-semibold text-center">Add New Task</h2>
@@ -192,8 +137,6 @@ const Index = () => {
           </button>
         </div>
       </div>
-
-      <TaskList tasks={tasks} />
     </div>
   );
 };
