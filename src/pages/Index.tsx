@@ -100,15 +100,17 @@ const Index = () => {
           <TaskCard task={selectedTask} />
         </div>
       )}
-      <h1 className="mb-4 text-2xl font-bold text-center">
-        Parent-Child Gantt Chart
-      </h1>
-      <Gantt tasks={tasks} onDoubleClick={(e) => setSelectedTask(e)} />
+
+      <Gantt
+        tasks={tasks}
+        onDoubleClick={(e) => setSelectedTask(e)}
+        listCellWidth="100px"
+      />
       <div className="p-4 bg-white rounded shadow">
         <h2 className="mb-2 text-lg font-semibold">Progress Adder</h2>
         <ul className="space-y-2">
           {tasks
-            .filter((task) => task.type === "task") // Show only child tasks
+            .filter((task) => task.type === "task")
             .map((task) => (
               <li key={task.id} className="flex items-center justify-between">
                 <span>
