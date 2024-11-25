@@ -17,7 +17,10 @@ const Index = () => {
       id: "Project1",
       type: "project",
       progress: 0,
-      styles: { progressColor: "#6a1b9a", progressSelectedColor: "#4a148c" },
+      styles: {
+        progressColor: "#6a1b9a",
+        progressSelectedColor: "#4a148c",
+      },
     },
     {
       start: new Date(2024, 10, 25),
