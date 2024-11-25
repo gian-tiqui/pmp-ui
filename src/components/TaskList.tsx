@@ -15,7 +15,7 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
   ]);
   const { setTasks } = useTasksStore();
 
-  const draggedItemRef = useRef<CustomTask | null>(null); // Ref to store the dragged task
+  const draggedItemRef = useRef<CustomTask | null>(null);
 
   useEffect(() => {
     const groupTaskByStatus = () => {
@@ -46,7 +46,7 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
     event: React.DragEvent<HTMLDivElement>
   ) => {
     draggedItemRef.current = task;
-    event.dataTransfer.setData("text/plain", task.id); // Set task ID for drag data
+    event.dataTransfer.setData("text/plain", task.id);
   };
 
   const handleDrop = (
@@ -56,7 +56,7 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
     event.preventDefault();
 
     const droppedTaskId = event.dataTransfer.getData("text/plain");
-    if (!droppedTaskId || !draggedItemRef.current) return; // Handle invalid drop
+    if (!droppedTaskId || !draggedItemRef.current) return;
 
     const updatedGroupedTasks = [...groupedTasks];
     const sourceGroupIndex = updatedGroupedTasks.findIndex((group) =>
@@ -71,14 +71,12 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
       targetGroupIndex !== -1 &&
       sourceGroupIndex !== targetGroupIndex
     ) {
-      // Remove task from source group
       const sourceGroup = updatedGroupedTasks[sourceGroupIndex];
       const sourceTasks = sourceGroup.tasks.filter(
         (t) => t.id !== droppedTaskId
       );
       sourceGroup.tasks = sourceTasks;
 
-      // Add task to target group and update progress
       const draggedTask = draggedItemRef.current as CustomTask;
       switch (targetGroup) {
         case "todo":
@@ -101,12 +99,12 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
       setTasks(newTasks);
 
       if (!onTaskDrop) return;
-      // Call prop callback to update state in parent component (if needed)
-      onTaskDrop(droppedTaskId, targetGroup); // Optional: Inform parent about drop
+      onTaskDrop(droppedTaskId, targetGroup);
     }
   };
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault(); // Allow drop on target element
+    event.preventDefault();
   };
 
   return (
