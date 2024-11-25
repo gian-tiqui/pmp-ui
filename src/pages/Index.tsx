@@ -107,7 +107,7 @@ const Index = () => {
         listCellWidth="100px"
       />
 
-      <TaskList tasks={_tasks} />
+      <TaskList _tasks={_tasks} />
 
       <div className="p-4 mt-5 bg-white rounded shadow">
         <h2 className="text-lg font-semibold text-center">Add New Task</h2>

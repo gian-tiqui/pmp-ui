@@ -3,11 +3,11 @@ import { CustomTask, TaskListType } from "../types/types";
 import useTasksStore from "../store/tasks";
 
 interface Props {
-  tasks: CustomTask[];
+  _tasks: CustomTask[];
   onTaskDrop?: (taskId: string, newGroup: string) => void;
 }
 
-const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
+const TaskList: React.FC<Props> = ({ _tasks, onTaskDrop }) => {
   const [groupedTasks, setGroupedTasks] = useState<TaskListType[]>([
     { name: "todo", tasks: [] },
     { name: "in-progress", tasks: [] },
@@ -25,7 +25,7 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
         { name: "done", tasks: [] },
       ];
 
-      tasks.forEach((task) => {
+      _tasks.forEach((task) => {
         if (task.progress === 0) {
           _groupedTasks[0].tasks.push(task);
         } else if (task.progress > 0 && task.progress < 100) {
@@ -39,7 +39,7 @@ const TaskList: React.FC<Props> = ({ tasks, onTaskDrop }) => {
     };
 
     groupTaskByStatus();
-  }, [tasks]);
+  }, [_tasks]);
 
   const handleDragStart = (
     task: CustomTask,
