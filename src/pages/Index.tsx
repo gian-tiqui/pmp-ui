@@ -126,11 +126,7 @@ const Index = () => {
           <TaskCard task={selectedTask} />
         </div>
       )}
-      <div className="flex justify-center gap-3 pt-5 pb-5">
-        <p className="text-xl font-semibold">
-          THIS IS A TESTING PHASE FOR GANTT CHART LIBRARIES
-        </p>
-      </div>
+
       <Gantt
         tasks={tasks}
         onDoubleClick={(e) => setSelectedTask(e)}
