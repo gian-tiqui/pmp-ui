@@ -1,3 +1,4 @@
+import { Task } from "gantt-task-react";
 import { ReactNode } from "react";
 
 type RouteType = {
@@ -6,6 +7,8 @@ type RouteType = {
   name: string;
 };
 
-export type { RouteType };
+type CustomTask = Task & {
+  barChildren?: Task[];
+};
 
-// epson printer inkpad
+export type { RouteType, CustomTask };
